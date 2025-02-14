@@ -1,0 +1,12 @@
+Classes POCO (Plain Old CLR Object / Objeto CLR antigo simples) -> CLR = Common Language Runtime
+Um objeto POCO não tem qualquer dependência com um framework externo.
+- Minimiza a dependência entre as camadas;
+- Minimiza a manutenção, caso eu troque de tecnologias e/ou frameworks apenas as camadas de infra-estrutura são afetadas;
+- Aumenta sua capacidade de teste.
+
+
+Classes DTO
+Objeto para transitar dados, que pode possuir dados de mais de uma entidade.
+
+
+
