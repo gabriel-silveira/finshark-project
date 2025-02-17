@@ -1,6 +1,6 @@
 using api.Data;
 using api.Mappers;
-using api.DTOs.Stock;
+using api.Dtos.Stock;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers {
@@ -38,15 +38,48 @@ namespace api.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateStockRequestDTO stockDto)
+        public IActionResult Create([FromBody] CreateStockRequestDto stockDto)
         {
-            var stockModel = stockDto.ToStockFromCreateDTO();
+            var stockModel = stockDto.ToStockFromCreateDto();
 
             _context.Stocks.Add(stockModel);
             
             _context.SaveChanges();
             
             return CreatedAtAction(nameof(GetById), new { id = stockModel.Id }, stockModel);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateStockRequestDto stockDto)
+        {
+            var stockModel = _context.Stocks.FirstOrDefault(s => s.Id == id);
+            
+            if (stockModel == null) return NotFound();
+            
+            stockModel.Symbol = stockDto.Symbol;
+            stockModel.CompanyName = stockDto.CompanyName;
+            stockModel.Purchase = stockDto.Purchase;
+            stockModel.LastDiv = stockDto.LastDiv;
+            stockModel.Industry = stockDto.Industry;
+            stockModel.MarketCap = stockDto.MarketCap;
+
+            _context.SaveChanges();
+            
+            return Ok(stockModel);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var stockModel = _context.Stocks.FirstOrDefault(s => s.Id == id);
+            
+            if (stockModel == null) return NotFound();
+            
+            _context.Stocks.Remove(stockModel);
+            
+            _context.SaveChanges();
+
+            return NoContent();
         }
     }
 }
