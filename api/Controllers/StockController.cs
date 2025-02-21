@@ -18,7 +18,6 @@ namespace api.Controllers {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            // .ToList() is a "deferred execution"
             var stocks = await _stockRepository.GetAllAsync();
 
             return Ok(stocks);
@@ -31,7 +30,7 @@ namespace api.Controllers {
 
             if (stock == null) return NotFound();
             
-            return Ok(stock.ToStockDTO());
+            return Ok(stock);
         }
 
         [HttpPost]

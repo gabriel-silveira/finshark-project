@@ -3,9 +3,9 @@ using api.Models;
 
 namespace api.Mappers
 {
-    public static class StockerMappers
+    public static class StockMappers
     {
-        public static StockDto ToStockDTO(this Stock stockModel)
+        public static StockDto ToStockDto(this Stock stockModel)
         {
             return new StockDto
             {
@@ -16,6 +16,8 @@ namespace api.Mappers
                 LastDiv = stockModel.LastDiv,
                 Industry = stockModel.Industry,
                 MarketCap = stockModel.MarketCap,
+                CreatedAt = stockModel.CreatedAt,
+                Comments = stockModel.Comments.Select(c => c.ToCommentDto()).ToList()
             };
         }
 

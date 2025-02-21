@@ -16,18 +16,24 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<List<Stock>> GetAllAsync()
+        public async Task<IEnumerable<StockDto>> GetAllAsync()
         {
-            var stocks = await _context.Stocks.ToListAsync();
+            var stocks = await _context.Stocks
+                .Include(c => c.Comments)
+                .ToListAsync();
             
-            var stockDto = stocks.Select(s => s.ToStockDTO());
+            var stockDto = stocks.Select(s => s.ToStockDto());
             
-            return stocks;
+            return stockDto;
         }
 
-        public async Task<Stock?> GetByIdAsync(int id)
+        public async Task<StockDto?> GetByIdAsync(int id)
         {
-            return await _context.Stocks.FindAsync(id);
+            var stock = await _context.Stocks
+                .Include(c => c.Comments)
+                .FirstOrDefaultAsync(i => i.Id == id);
+
+            return stock?.ToStockDto() ?? null;
         }
 
         public async Task<Stock> CreateAsync(Stock stockModel)
@@ -68,6 +74,11 @@ namespace api.Repository
             await _context.SaveChangesAsync();
 
             return stockModel;
+        }
+
+        public async Task<bool> StockExists(int id)
+        {
+            return await _context.Stocks.AnyAsync(s => s.Id == id);
         }
     }
 }
