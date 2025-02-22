@@ -20,25 +20,38 @@ namespace api.Repository
         {
             var comments = await _context.Comments.ToListAsync();
             
-            var commentDto = comments.Select(comment => comment.ToCommentDto());
+            var commentDto = comments.Select(comment => comment.ToComment());
             
             return commentDto;
         }
 
         public async Task<CommentDto?> GetByIdAsync(int id)
         {
-            var comment = await _context.Comments.FindAsync(id);
+            var commentDto = await _context.Comments.FindAsync(id);
 
-            return comment?.ToCommentDto() ?? null;
+            return commentDto?.ToComment() ?? null;
         }
 
-        public async Task<Comment> CreateAsync(Comment comment)
+        public async Task<Comment> CreateAsync(Comment commentModel)
         {
-            await _context.Comments.AddAsync(comment);
+            await _context.Comments.AddAsync(commentModel);
             await _context.SaveChangesAsync();
             
-            return comment;
+            return commentModel;
+        }
+
+        public async Task<Comment?> UpdateAsync(int id, Comment commentModel)
+        {
+            var existingComment = await _context.Comments.FindAsync(id);
+
+            if (existingComment == null) return null;
+            
+            existingComment.Title = commentModel.Title;
+            existingComment.Content = commentModel.Content;
+            
+            await _context.SaveChangesAsync();
+            
+            return existingComment;
         }
     }
 }
-
