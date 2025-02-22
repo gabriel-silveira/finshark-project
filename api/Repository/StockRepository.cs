@@ -23,6 +23,11 @@ namespace api.Repository
                 .Include(c => c.Comments)
                 .AsQueryable();
 
+            if (stockQueryObject.Id != null)
+            {
+                stocks = stocks.Where(stock => stock.Id == stockQueryObject.Id);
+            }
+
             if (!string.IsNullOrWhiteSpace(stockQueryObject.Symbol))
             {
                 stocks = stocks.Where(stock => stock.Symbol.Contains(stockQueryObject.Symbol));
@@ -32,6 +37,31 @@ namespace api.Repository
             {
                 stocks = stocks.Where(stock => stock.CompanyName.Contains(stockQueryObject.CompanyName));
             }
+
+            // TODO: move this code to another filtering class
+            if (!string.IsNullOrWhiteSpace(stockQueryObject.SortBy))
+            {
+                if (stockQueryObject.SortBy.Equals("Id", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = stockQueryObject.IsDescending ?
+                        stocks.OrderByDescending(s => s.Id) : stocks.OrderBy(s => s.Id);
+                }
+            } else if (!string.IsNullOrWhiteSpace(stockQueryObject.SortBy))
+            {
+                if (stockQueryObject.SortBy.Equals("Symbol", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = stockQueryObject.IsDescending ?
+                        stocks.OrderByDescending(s => s.Symbol) : stocks.OrderBy(s => s.Symbol);
+                }
+            } else if (!string.IsNullOrWhiteSpace(stockQueryObject.SortBy))
+            {
+                if (stockQueryObject.SortBy.Equals("CompanyName", StringComparison.OrdinalIgnoreCase))
+                {
+                    stocks = stockQueryObject.IsDescending ?
+                        stocks.OrderByDescending(s => s.CompanyName) : stocks.OrderBy(s => s.CompanyName);
+                }
+            }
+            // END_TODO
             
             var stockDto = stocks.Select(s => s.ToStockDto());
             
