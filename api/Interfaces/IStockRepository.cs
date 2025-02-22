@@ -1,11 +1,12 @@
 using api.Dtos.Stock;
+using api.Filters.QueryObjects;
 using api.Models;
 
 namespace api.Interfaces
 {
     public interface IStockRepository
     {
-        Task<IEnumerable<StockDto>> GetAllAsync();
+        Task<IEnumerable<StockDto>> GetAllAsync(StockQueryObject stockQueryObject);
         
         Task<StockDto?> GetByIdAsync(int id);
         
