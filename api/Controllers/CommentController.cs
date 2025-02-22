@@ -32,7 +32,7 @@ namespace api.Controllers
         {
             var comment = await _commentRepository.GetByIdAsync(id);
 
-            if (comment == null) return NotFound();
+            if (comment == null) return NotFound("Comment not found");
             
             return Ok(comment);
         }
@@ -52,9 +52,17 @@ namespace api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto commentDto)
         {
-            var comment = await _commentRepository.UpdateAsync(id, commentDto.ToCommentFromUpdate());
+            var commentModel = await _commentRepository.UpdateAsync(id, commentDto.ToCommentFromUpdate());
 
-            return comment != null ? Ok(comment) : NotFound();
+            return commentModel != null ? Ok(commentModel) : NotFound("Comment not found");
+        }
+    
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete([FromRoute] int id)
+        {
+            var commentModel = await _commentRepository.DeleteAsync(id);
+            
+            return commentModel != null ? Ok(commentModel) : NotFound("Comment not found");
         }
     }
 }
