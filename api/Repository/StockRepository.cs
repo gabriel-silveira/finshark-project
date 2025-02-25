@@ -63,7 +63,9 @@ namespace api.Repository
             }
             // END_TODO
             
-            var stockDto = stocks.Select(s => s.ToStockDto());
+            var skipNumber = (stockQueryObject.PageNumber - 1) * stockQueryObject.PageSize;
+            
+            var stockDto = stocks.Skip(skipNumber).Take(stockQueryObject.PageSize).Select(s => s.ToStockDto());
             
             return stockDto;
         }

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Base\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 
