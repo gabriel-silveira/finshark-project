@@ -2,6 +2,7 @@ using api.Dtos.Comment;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -20,6 +21,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Comment>>> GetAll()
         {
             var comments = await _commentRepository.GetAllAsync();
@@ -28,6 +30,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<ActionResult> GetById(int id)
         {
             var comment = await _commentRepository.GetByIdAsync(id);
@@ -38,6 +41,7 @@ namespace api.Controllers
         }
 
         [HttpPost("{stockId:int}")]
+        [Authorize]
         public async Task<ActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDto commentDto)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -52,6 +56,7 @@ namespace api.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<ActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto commentDto)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -62,6 +67,7 @@ namespace api.Controllers
         }
     
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<ActionResult> Delete([FromRoute] int id)
         {
             var commentModel = await _commentRepository.DeleteAsync(id);

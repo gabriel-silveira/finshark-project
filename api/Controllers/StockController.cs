@@ -2,6 +2,7 @@ using api.Mappers;
 using api.Dtos.Stock;
 using api.Filters.QueryObjects;
 using api.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers {
@@ -17,6 +18,7 @@ namespace api.Controllers {
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] StockQueryObject stockQueryObject)
         {
             var stocks = await _stockRepository.GetAllAsync(stockQueryObject);
@@ -25,6 +27,7 @@ namespace api.Controllers {
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var stock = await _stockRepository.GetByIdAsync(id);
@@ -35,6 +38,7 @@ namespace api.Controllers {
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateStockRequestDto stockDto)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -47,6 +51,7 @@ namespace api.Controllers {
         }
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateStockRequestDto stockDto)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -59,6 +64,7 @@ namespace api.Controllers {
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var stockModel = await _stockRepository.DeleteAsync(id);
