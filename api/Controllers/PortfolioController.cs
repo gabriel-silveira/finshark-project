@@ -15,7 +15,16 @@ namespace api.Controllers
         {
             var userPortfolio = await portfolioRepository.GetUserPortfolio(User.GetUsername());
 
-            return userPortfolio == null ? BadRequest("Can't get the user portfolio") : Ok(userPortfolio);
+            return userPortfolio == null ? BadRequest("Couldn't get the user portfolio") : Ok(userPortfolio);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AddStockToPortfolio([FromBody] int stockId)
+        {
+            var stockAdded = await portfolioRepository.AddStock(stockId, User.GetUsername());
+
+            return stockAdded == null ? BadRequest("Couldn't add the stock to the portfolio") : Ok(stockAdded);
         }
     }
 }

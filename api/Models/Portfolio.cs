@@ -7,10 +7,10 @@ namespace api.Models
     {
         public required string AppUserId { get; set; }
         
-        public required AppUser AppUser { get; set; }
+        public AppUser? AppUser { get; set; }
         
         public int StockId { get; set; }
         
-        public required Stock Stock { get; set; }
+        public Stock? Stock { get; set; }
     }
 }
