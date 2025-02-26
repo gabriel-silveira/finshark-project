@@ -1,17 +1,21 @@
 using api.Data;
 using api.Dtos.Comment;
+using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-    public class CommentRepository(ApplicationDbContext context) : ICommentRepository
+    public class CommentRepository(ApplicationDbContext context, UserManager<AppUser> userManager) : ICommentRepository
     {
         public async Task<IEnumerable<CommentDto>> GetAllAsync()
         {
-            var comments = await context.Comments.ToListAsync();
+            var comments = await context.Comments
+                .Include(c => c.AppUser).
+                ToListAsync();
             
             var commentDto = comments.Select(comment => comment.ToComment());
             
@@ -20,14 +24,22 @@ namespace api.Repository
 
         public async Task<CommentDto?> GetByIdAsync(int id)
         {
-            var commentDto = await context.Comments.FindAsync(id);
+            var commentDto = await context.Comments
+                .Include(c => c.AppUser)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             return commentDto?.ToComment() ?? null;
         }
 
-        public async Task<Comment> CreateAsync(CreateCommentRequestDto commentDto, int stockId)
+        public async Task<Comment?> CreateAsync(CreateCommentRequestDto commentDto, int stockId, string username)
         {
+            var appUser = await userManager.FindByNameAsync(username);
+            
+            if (appUser == null) return null;
+
             var commentModel = commentDto.ToCommentFromCreate(stockId);
+            
+            commentModel.AppUserId = appUser?.Id;
             
             await context.Comments.AddAsync(commentModel);
 

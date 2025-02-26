@@ -10,10 +10,11 @@ namespace api.Repository
 {
     public class StockRepository(ApplicationDbContext context) : IStockRepository
     {
-        public IQueryable<StockDto> GetAllAsync(StockQueryObject stockQueryObject)
+        public List<StockDto> GetAllAsync(StockQueryObject stockQueryObject)
         {
             var stocks = context.Stocks
                 .Include(c => c.Comments)
+                .ThenInclude(c => c.AppUser)
                 .AsQueryable();
 
             if (stockQueryObject.Id != null)
@@ -60,7 +61,7 @@ namespace api.Repository
             
             var stockDto = stocks.Skip(skipNumber).Take(stockQueryObject.PageSize).Select(s => s.ToStockDto());
             
-            return stockDto;
+            return stockDto.ToList();
         }
 
         public async Task<StockDto?> GetByIdAsync(int id)

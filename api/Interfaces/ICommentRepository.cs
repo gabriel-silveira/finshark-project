@@ -9,7 +9,7 @@ namespace api.Interfaces
 
         Task<CommentDto?> GetByIdAsync(int id);
         
-        Task<Comment> CreateAsync(CreateCommentRequestDto commentDto, int stockId);
+        Task<Comment?> CreateAsync(CreateCommentRequestDto commentDto, int stockId, string username);
         
         Task<Comment?> UpdateAsync(int id, Comment comment);
         
