@@ -35,9 +35,7 @@ namespace api.Controllers
             
             if (!await stockRepository.StockExists(stockId)) return BadRequest("Stock does not exist");
             
-            var commentModel = commentDto.ToCommentFromCreate(stockId);
-            
-            await commentRepository.CreateAsync(commentModel);
+            var commentModel = await commentRepository.CreateAsync(commentDto, stockId);
             
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, commentModel.ToComment());
         }

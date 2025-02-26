@@ -7,5 +7,7 @@ namespace api.Interfaces
         Task<List<Stock>?> GetUserPortfolio(string username);
         
         Task<int?> AddStock(int stockId, string username);
+        
+        Task<int?> RemoveStock(int stockId, string username);
     }
 }

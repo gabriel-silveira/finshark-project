@@ -25,9 +25,12 @@ namespace api.Repository
             return commentDto?.ToComment() ?? null;
         }
 
-        public async Task<Comment> CreateAsync(Comment commentModel)
+        public async Task<Comment> CreateAsync(CreateCommentRequestDto commentDto, int stockId)
         {
+            var commentModel = commentDto.ToCommentFromCreate(stockId);
+            
             await context.Comments.AddAsync(commentModel);
+
             await context.SaveChangesAsync();
             
             return commentModel;

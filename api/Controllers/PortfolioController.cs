@@ -26,5 +26,14 @@ namespace api.Controllers
 
             return stockAdded == null ? BadRequest("Couldn't add the stock to the portfolio") : Ok(stockAdded);
         }
+
+        [HttpDelete]
+        [Authorize]
+        public async Task<IActionResult> RemoveStockFromPortfolio([FromBody] int stockId)
+        {
+            var removedId = await portfolioRepository.RemoveStock(stockId, User.GetUsername());
+            
+            return removedId != null ? Ok(removedId) : BadRequest("Couldn't remove the stock from the portfolio");
+        }
     }
 }
