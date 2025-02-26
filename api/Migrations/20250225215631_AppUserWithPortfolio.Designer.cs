@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250225215631_AppUserWithPortfolio")]
+    partial class AppUserWithPortfolio
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a0a2f394-ea8a-4bd7-a5c0-33839375e843",
+                            Id = "39ee54d4-068b-4643-9e80-0f26bb65a70a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "963ef919-1a70-4e5f-8d1a-74499fc5d8c3",
+                            Id = "cbf41a24-fb9c-42b6-a311-2b378ecee74b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -148,13 +151,6 @@ namespace api.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "68060241-8072-41c9-bef4-ab60b3f4a857",
-                            RoleId = "39ee54d4-068b-4643-9e80-0f26bb65a70a"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -239,22 +235,6 @@ namespace api.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "be1a1132-03e5-4841-9d2b-83cd68dc04a6",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "df2b27d5-c6e0-4385-be40-1539523b9c2f",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGlbNfIDoOK7DW2pYG+uw+R/cTzT1KjG9ouF0wFxIV6gA7MZl7zLATeqLsryIdjqSw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "3eeaeaf2-d144-4384-a5d9-b5eb0558a751",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("api.Models.Comment", b =>
@@ -342,7 +322,7 @@ namespace api.Migrations
                         {
                             Id = 1,
                             CompanyName = "Hapvida",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1329),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6512),
                             Industry = "Saúde",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -353,7 +333,7 @@ namespace api.Migrations
                         {
                             Id = 2,
                             CompanyName = "B3",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1365),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6553),
                             Industry = "Mercado financeiro",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -364,7 +344,7 @@ namespace api.Migrations
                         {
                             Id = 3,
                             CompanyName = "Cosan",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1369),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6558),
                             Industry = "Etanol",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -375,7 +355,7 @@ namespace api.Migrations
                         {
                             Id = 4,
                             CompanyName = "Lojas Renner",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1373),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6562),
                             Industry = "Vestuário",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -386,7 +366,7 @@ namespace api.Migrations
                         {
                             Id = 5,
                             CompanyName = "Cogna",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1376),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6566),
                             Industry = "Educação",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -397,7 +377,7 @@ namespace api.Migrations
                         {
                             Id = 6,
                             CompanyName = "Azevedo & Travassos",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1381),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6573),
                             Industry = "Construção",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -408,7 +388,7 @@ namespace api.Migrations
                         {
                             Id = 7,
                             CompanyName = "Magazine Luiza",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1384),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6578),
                             Industry = "Varejo",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -419,7 +399,7 @@ namespace api.Migrations
                         {
                             Id = 8,
                             CompanyName = "Banco Bradesco",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1882),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6582),
                             Industry = "Banco",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -430,7 +410,7 @@ namespace api.Migrations
                         {
                             Id = 9,
                             CompanyName = "Ambev",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1890),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6585),
                             Industry = "Bebidas",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -441,7 +421,7 @@ namespace api.Migrations
                         {
                             Id = 10,
                             CompanyName = "Banco do Brasil",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1896),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6591),
                             Industry = "Banco",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -452,7 +432,7 @@ namespace api.Migrations
                         {
                             Id = 11,
                             CompanyName = "Petrobras",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1899),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6595),
                             Industry = "Combustíveis",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -463,7 +443,7 @@ namespace api.Migrations
                         {
                             Id = 12,
                             CompanyName = "Azul",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1902),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6599),
                             Industry = "Companhias aéreas",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -474,7 +454,7 @@ namespace api.Migrations
                         {
                             Id = 13,
                             CompanyName = "Itaú Unibanco",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1905),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6694),
                             Industry = "Banco",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -485,7 +465,7 @@ namespace api.Migrations
                         {
                             Id = 14,
                             CompanyName = "Itaúsa",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1908),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6709),
                             Industry = "Holding",
                             LastDiv = 2m,
                             MarketCap = 3L,
@@ -496,7 +476,7 @@ namespace api.Migrations
                         {
                             Id = 15,
                             CompanyName = "CVC",
-                            CreatedAt = new DateTime(2025, 2, 26, 12, 8, 59, 200, DateTimeKind.Local).AddTicks(1911),
+                            CreatedAt = new DateTime(2025, 2, 25, 18, 56, 30, 427, DateTimeKind.Local).AddTicks(6721),
                             Industry = "Turismo",
                             LastDiv = 2m,
                             MarketCap = 3L,

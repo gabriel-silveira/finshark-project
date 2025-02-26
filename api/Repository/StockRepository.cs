@@ -8,18 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Repository
 {
-    public class StockRepository : IStockRepository
+    public class StockRepository(ApplicationDbContext context) : IStockRepository
     {
-        private readonly ApplicationDbContext _context;
-
-        public StockRepository(ApplicationDbContext context)
+        public IQueryable<StockDto> GetAllAsync(StockQueryObject stockQueryObject)
         {
-            _context = context;
-        }
-
-        public async Task<IEnumerable<StockDto>> GetAllAsync(StockQueryObject stockQueryObject)
-        {
-            var stocks = _context.Stocks
+            var stocks = context.Stocks
                 .Include(c => c.Comments)
                 .AsQueryable();
 
@@ -72,7 +65,7 @@ namespace api.Repository
 
         public async Task<StockDto?> GetByIdAsync(int id)
         {
-            var stock = await _context.Stocks
+            var stock = await context.Stocks
                 .Include(c => c.Comments)
                 .FirstOrDefaultAsync(i => i.Id == id);
 
@@ -81,16 +74,16 @@ namespace api.Repository
 
         public async Task<Stock> CreateAsync(Stock stockModel)
         {
-            await _context.Stocks.AddAsync(stockModel);
+            await context.Stocks.AddAsync(stockModel);
             
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return stockModel;
         }
 
         public async Task<Stock?> UpdateAsync(int id, UpdateStockRequestDto stockDto)
         {
-            var stockModel = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
+            var stockModel = await context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
 
             if (stockModel == null) return null;
             
@@ -101,27 +94,27 @@ namespace api.Repository
             stockModel.Industry = stockDto.Industry;
             stockModel.MarketCap = stockDto.MarketCap;
             
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             
             return stockModel;
         }
 
         public async Task<Stock?> DeleteAsync(int id)
         {
-            var stockModel = await _context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
+            var stockModel = await context.Stocks.FirstOrDefaultAsync(s => s.Id == id);
 
             if (stockModel == null) return null;
 
-            _context.Stocks.Remove(stockModel);
+            context.Stocks.Remove(stockModel);
             
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return stockModel;
         }
 
         public async Task<bool> StockExists(int id)
         {
-            return await _context.Stocks.AnyAsync(s => s.Id == id);
+            return await context.Stocks.AnyAsync(s => s.Id == id);
         }
     }
 }

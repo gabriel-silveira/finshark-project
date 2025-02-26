@@ -6,7 +6,7 @@ namespace api.Interfaces
 {
     public interface IStockRepository
     {
-        Task<IEnumerable<StockDto>> GetAllAsync(StockQueryObject stockQueryObject);
+        IQueryable<StockDto> GetAllAsync(StockQueryObject stockQueryObject);
         
         Task<StockDto?> GetByIdAsync(int id);
         

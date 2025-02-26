@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace api.Seeders;
 
-public class IdentityRoleSeederData
+public static class IdentityRoleSeederData
 {
     public static List<IdentityRole> GetData()
     {
